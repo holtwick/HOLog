@@ -20,11 +20,15 @@ output = [output stringByAppendingFormat:@" %@:(%s)" fmt, [parts objectAtIndex:i
 stack += sizeof(type); }
 
 NSString *__hoGetMethodCallWithArguments(id *__selfPtr, SEL __cmd) {
-
     // Get argument stack
     id __self = *__selfPtr;
     void *stack = __selfPtr;
+
+    // simulator is a 32-bit mac app with old runtime, iOS devices have new runtime
+    // new runtime aligns stack variables differently
+    #if TARGET_IPHONE_SIMULATOR
     stack += sizeof(__self) + sizeof(__cmd);
+    #endif
 
     // Prepare Method info
     Method method = class_getInstanceMethod([__self class], __cmd);
