@@ -11,7 +11,7 @@
 #include <execinfo.h>
 #include <stdio.h>
 
-NSString *HOGetMethodCallWithArguments(id *__selfPtr, SEL __cmd, char countCalls);
+NSString *HOGetMethodCallWithArguments(id *__selfPtr, SEL __cmd);
 
 #define HOLogPing \
         NSLog(@"%@", HOGetMethodCallWithArguments(&self, _cmd));

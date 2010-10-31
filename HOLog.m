@@ -21,7 +21,7 @@ type *v = stack; \
 output = [output stringByAppendingFormat:@" %@:(%s)" fmt, [parts objectAtIndex:i - 2], #type, *v]; \
 stack += sizeof(type); }
 
-NSString *HOGetMethodCallWithArguments(id *__selfPtr, SEL __cmd, char countCalls) {
+NSString *HOGetMethodCallWithArguments(id *__selfPtr, SEL __cmd) {
     
     // Get argument stack
     id __self = *__selfPtr;
@@ -51,12 +51,11 @@ NSString *HOGetMethodCallWithArguments(id *__selfPtr, SEL __cmd, char countCalls
             if(strcmp(argtype, @encode(id)) == 0) { 
                 id o = (id)*(Handle)stack;
                 if([o isKindOfClass:[NSString class]]) {
-                    output = [output stringByAppendingFormat:@" %@:@%@", [parts objectAtIndex:i - 2], [o repr]]; 
+                    output = [output stringByAppendingFormat:@" %@:@\"%@\"", [parts objectAtIndex:i - 2], [o description]]; 
                 } else {
                     output = [output stringByAppendingFormat:@" %@:%@", [parts objectAtIndex:i - 2], o]; 
                 }
-                stack += sizeof(o); 
-                
+                stack += sizeof(o);
             } 
             
             _testType(int, @"%d")
