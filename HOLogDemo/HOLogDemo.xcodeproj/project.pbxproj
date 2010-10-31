@@ -31,6 +31,7 @@
 		28D7ACF70DDB3853001CB0EB /* HOLogDemoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HOLogDemoViewController.m; sourceTree = "<group>"; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* HOLogDemo_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HOLogDemo_Prefix.pch; sourceTree = "<group>"; };
+		4321FD8C127DA55100130ECC /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = README.md; path = ../README.md; sourceTree = SOURCE_ROOT; };
 		4399ABD5127ADAB800BFD49D /* HOLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HOLog.h; path = ../HOLog.h; sourceTree = SOURCE_ROOT; };
 		4399ABD6127ADAB800BFD49D /* HOLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HOLog.m; path = ../HOLog.m; sourceTree = SOURCE_ROOT; };
 		8D1107310486CEB800E47090 /* HOLogDemo-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "HOLogDemo-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
@@ -72,6 +73,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				4321FD8C127DA55100130ECC /* README.md */,
 				4399ABD5127ADAB800BFD49D /* HOLog.h */,
 				4399ABD6127ADAB800BFD49D /* HOLog.m */,
 				080E96DDFE201D6D7F000001 /* Classes */,

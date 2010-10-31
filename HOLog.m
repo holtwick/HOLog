@@ -4,6 +4,8 @@
 
 #import "HOLog.h"
 
+#if TARGET_IPHONE_SIMULATOR
+
 #import <objc/runtime.h> 
 #import <objc/message.h>
 #include <execinfo.h>
@@ -19,60 +21,69 @@ type *v = stack; \
 output = [output stringByAppendingFormat:@" %@:(%s)" fmt, [parts objectAtIndex:i - 2], #type, *v]; \
 stack += sizeof(type); }
 
-NSString *__hoGetMethodCallWithArguments(id *__selfPtr, SEL __cmd) {
+NSString *HOGetMethodCallWithArguments(id *__selfPtr, SEL __cmd, char countCalls) {
     
     // Get argument stack
     id __self = *__selfPtr;
     void *stack = __selfPtr; 
     stack += sizeof(__self) + sizeof(__cmd); 
     
-    // Prepare Method info
+    // Prepare Method info    
     Method method = class_getInstanceMethod([__self class], __cmd); 
-    NSArray *parts = [NSStringFromSelector(method_getName(method)) componentsSeparatedByString:@":"]; 
+    NSString *methodName = NSStringFromSelector(method_getName(method));
     NSString *output = [NSString stringWithFormat:@"-[%@", NSStringFromClass([__self class])]; 
     
-    // Loop arguments
-    for(unsigned i = 2; i < method_getNumberOfArguments(method); ++i) {         
-        char *argtype = method_copyArgumentType(method, i); 
+    int nargs = method_getNumberOfArguments(method);    
+    if(nargs <= 2) {
+        // No arguments
+        output = [output stringByAppendingFormat:@" %@", methodName]; 
         
-        // NSLog(@"%s", argtype);
+    } else {    
+        // Loop arguments
+        NSArray *parts = [methodName componentsSeparatedByString:@":"]; 
         
-        // Object
-        if(strcmp(argtype, @encode(id)) == 0) { 
-            id o = (id)*(Handle)stack;
-            if([o isKindOfClass:[NSString class]]) {
-                output = [output stringByAppendingFormat:@" %@:@%@", [parts objectAtIndex:i - 2], [o description]]; 
-            } else {
-                output = [output stringByAppendingFormat:@" %@:%@", [parts objectAtIndex:i - 2], o]; 
-            }
-            stack += sizeof(o); 
+        for(unsigned i = 2; i < nargs; ++i) {         
+            char *argtype = method_copyArgumentType(method, i); 
             
-        } 
-        
-        _testType(int, @"%d")
-        _testType(unsigned int, @"%u")
-        _testType(short, @"%hi")
-        _testType(unsigned short, @"%hu")
-        _testType(long long, @"%qi")
-        _testType(unsigned long long, @"%qu")
-        _testType(float, @"%f")
-        _testType(double, @"%f")
-        _testType(char, @"%d")
-        _testType(char *, @"\"%s\"")      
+            // NSLog(@"%s", argtype);
             
-        _testStruct(CGPoint, NSStringFromCGPoint)
-        _testStruct(CGRect, NSStringFromCGRect)
-        _testStruct(CGSize, NSStringFromCGSize)
-        _testStruct(NSRange, NSStringFromRange)
-        
-        else {
-            output = [output stringByAppendingFormat:@" %@:***not supported '%s' | BREAKING HERE! ***", [parts objectAtIndex:i - 2], argtype]; 
+            // Object
+            if(strcmp(argtype, @encode(id)) == 0) { 
+                id o = (id)*(Handle)stack;
+                if([o isKindOfClass:[NSString class]]) {
+                    output = [output stringByAppendingFormat:@" %@:@%@", [parts objectAtIndex:i - 2], [o repr]]; 
+                } else {
+                    output = [output stringByAppendingFormat:@" %@:%@", [parts objectAtIndex:i - 2], o]; 
+                }
+                stack += sizeof(o); 
+                
+            } 
+            
+            _testType(int, @"%d")
+            _testType(unsigned int, @"%u")
+            _testType(short, @"%hi")
+            _testType(unsigned short, @"%hu")
+            _testType(long long, @"%qi")
+            _testType(unsigned long long, @"%qu")
+            _testType(float, @"%f")
+            _testType(double, @"%f")
+            _testType(char, @"%d")
+            _testType(char *, @"\"%s\"")      
+            
+            _testStruct(CGPoint, NSStringFromCGPoint)
+            _testStruct(CGRect, NSStringFromCGRect)
+            _testStruct(CGSize, NSStringFromCGSize)
+            _testStruct(NSRange, NSStringFromRange)
+            
+            else {
+                output = [output stringByAppendingFormat:@" %@:***not supported '%s' | BREAKING HERE! ***", [parts objectAtIndex:i - 2], argtype]; 
+                free(argtype); 
+                break; 
+            } 
+            
             free(argtype); 
-            break; 
         } 
-        
-        free(argtype); 
-    } 
+    }
     
     output = [NSString stringWithFormat:@"%@]", output]; 
     return output;
@@ -80,3 +91,5 @@ NSString *__hoGetMethodCallWithArguments(id *__selfPtr, SEL __cmd) {
 
 #undef _testStruct
 #undef _testType
+
+#endif

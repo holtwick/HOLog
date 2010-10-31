@@ -47,6 +47,11 @@ Examples output:
 
 	  -[HOLogDemoViewController exampleMethod:@a string a1:(int)42 a2:(CGPoint){12, 21} a3:(double)1.230000 a4:(char)1]
 
+Known Bugs
+----------
+
+  - Just works on iOS Simulator, not on actual devices. Help is very appreciated!
+
 Useful Links and Credits
 ------------------------
 

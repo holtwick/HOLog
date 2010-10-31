@@ -2,11 +2,25 @@
 //  Copyright 2010 holtwick.it. All rights reserved.
 //
 
+// TODO: Currently this Logger crashes on iOS devices!
+
+#if TARGET_IPHONE_SIMULATOR
+
 #import <objc/runtime.h> 
 #import <objc/message.h>
 #include <execinfo.h>
 #include <stdio.h>
 
-NSString *__hoGetMethodCallWithArguments(id *__selfPtr, SEL __cmd);
+NSString *HOGetMethodCallWithArguments(id *__selfPtr, SEL __cmd, char countCalls);
 
-#define HOLogPing NSLog(@"\n\n  %@\n\n", __hoGetMethodCallWithArguments(&self, _cmd));
+#define HOLogPing \
+        NSLog(@"%@", HOGetMethodCallWithArguments(&self, _cmd));
+
+#else
+
+// Fallback solution for iOS devices
+
+#define HOLogPing \
+        NSLog(@"%s", __PRETTY_FUNCTION__);
+
+#endif
