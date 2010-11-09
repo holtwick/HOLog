@@ -11,6 +11,10 @@
 
 @implementation HOLogDemoViewController
 
+- (void)exampleInt:(int)v {
+    HOLogPing
+}
+
 - (void)exampleMethod:(id)obj 
                    a1:(int)a1 
                    a2:(CGPoint)a2
@@ -28,6 +32,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self exampleInt:1];
+    
     // Test call
     [self exampleMethod:@"a string"
                      a1:42 
@@ -35,6 +41,13 @@
                      a3:1.23
                      a4:YES
      ];
+    
+    ^(id x) {
+        
+        // Will fail        
+        HOLogPing
+        
+    }(nil);
 }
 
 @end

@@ -11,10 +11,10 @@
 #include <execinfo.h>
 #include <stdio.h>
 
-NSString *HOGetMethodCallWithArguments(id *__selfPtr, SEL __cmd);
+NSString *HOGetMethodCallWithArguments(id *__selfPtr, SEL __cmd, char *fallback);  
 
 #define HOLogPing \
-        NSLog(@"%@", HOGetMethodCallWithArguments(&self, _cmd));
+        NSLog(@"%@", HOGetMethodCallWithArguments(&self, _cmd, (char *)__PRETTY_FUNCTION__));
 
 #else
 
