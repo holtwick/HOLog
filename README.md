@@ -1,6 +1,8 @@
 HOLog
 =====
 
+* Currently this helper will just work in limited circumstances i.e. only in an iOS Simulator!!! * 
+
 This NSLog helper can be put into an ObjC method and than dumps the full 
 method name including the values passed to that method.
 
