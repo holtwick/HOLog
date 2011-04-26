@@ -66,3 +66,9 @@ Useful Links and Credits
   - Macro Magic: <http://vgable.com/blog/2010/08/19/the-most-useful-objective-c-code-ive-ever-written/>	
   - Introspection: <http://stackoverflow.com/questions/1797964/how-to-pass-all-arguments-of-a-method-into-nslog/1799472#1799472>
   - CocoaLumberjack Integration: <http://petersteinberger.com/2010/10/logging-again/>
+
+
+License
+-------
+
+Apache License 2.0 http://www.apache.org/licenses/LICENSE-2.0
